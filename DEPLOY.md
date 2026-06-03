@@ -112,7 +112,7 @@ Para rodar localmente APÓS essas mudanças:
 
 Terminal 1 (Backend):
    cd backend\backend
-   .\mvnw.cmd spring-boot:run --spring.profiles.active=local
+   .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=local"
 
 Terminal 2 (Frontend):
    cd frontend-next

@@ -24,7 +24,7 @@ Para rodar o projeto localmente, siga os passos abaixo.
 
 2. Execute o comando:
    - Windows:
-     .\mvnw.cmd spring-boot:run
+     .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=local"
 
 3. O backend estará rodando em:
    http://localhost:8080
