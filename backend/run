@@ -1,0 +1,3 @@
+Backend (a partir da raiz do projeto):
+cd backend\backend
+.\mvnw.cmd spring-boot:run

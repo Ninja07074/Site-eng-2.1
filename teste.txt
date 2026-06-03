@@ -1,0 +1,49 @@
+============================================================
+  GUIA DE CONFIGURAÇÃO - Plataforma de Cursos
+============================================================
+
+Para rodar o projeto localmente, siga os passos abaixo.
+
+1. Java 17 ou superior
+   - Download: https://adoptium.net/ (Eclipse Temurin 17)
+   - Após instalar, verificar no terminal:
+     java -version
+
+2. Node.js 18 ou superior + npm
+   - Download: https://nodejs.org/ (versão LTS recomendada)
+   - Após instalar, verificar no terminal:
+     node -v
+     npm -v
+
+------------------------------------------------------------
+  PASSO 1 — RODAR O BACKEND (Spring Boot)
+------------------------------------------------------------
+
+1. Navegue até a pasta do backend:
+   cd "Site eng 2.1\backend\backend"
+
+2. Execute o comando:
+   - Windows:
+     .\mvnw.cmd spring-boot:run
+
+3. O backend estará rodando em:
+   http://localhost:8080
+
+------------------------------------------------------------
+  PASSO 2 — RODAR O FRONTEND (Next.js)
+------------------------------------------------------------
+
+1. Abra OUTRO terminal (deixe o do backend aberto)
+
+2. Navegue até a pasta do frontend:
+   cd "Site eng 2.1\frontend-next"
+
+3. Instale as dependências (só precisa fazer uma vez):
+   npm install
+
+4. Inicie o servidor de desenvolvimento:
+   npm run dev
+
+5. O frontend estará rodando em:
+   http://localhost:3000
+
