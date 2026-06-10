@@ -214,7 +214,7 @@ export default function AdminPage() {
                 <p style={{ color: 'var(--muted)', marginBottom: '16px', lineHeight: 1.6 }}>
                   {curso.descricao?.substring(0, 200)}{curso.descricao?.length > 200 ? '...' : ''}
                 </p>
-                
+
                 {rejectId === curso.idCurso ? (
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
                     <input
