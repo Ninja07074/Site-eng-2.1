@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         // Semana 3: libera chamadas do frontend local para facilitar integração.
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://127.0.0.1:3000", "https://site-eng-2-1.vercel.app")
+                .allowedOriginPatterns("http://localhost:3000", "http://127.0.0.1:3000", "https://site-eng-2-1.vercel.app", "https://*.vercel.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
