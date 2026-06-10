@@ -22,9 +22,15 @@ export default function MeusCursosPage() {
       }
       try {
         const inscricoes = await apiListarInscricoesPorUsuario(session.userId);
+        // InscricaoDTO retorna campos flat (cursoId, cursoTitulo, etc) ao invés do objeto curso aninhado
         const uniqueCourses = inscricoes
-          .map(insc => insc.curso)
-          .filter(c => !!c)
+          .filter(insc => !!insc.cursoId)
+          .map(insc => ({
+            idCurso: insc.cursoId,
+            titulo: insc.cursoTitulo,
+            imagemBase64: insc.cursoImagemBase64,
+            status: insc.cursoStatus
+          }))
           .filter((c, index, self) => self.findIndex(x => x.idCurso === c.idCurso) === index);
         
         setCursos(uniqueCourses);

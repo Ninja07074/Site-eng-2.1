@@ -206,7 +206,7 @@ export default function AdminPage() {
                   <div>
                     <h3 style={{ margin: '0 0 8px' }}>{curso.titulo}</h3>
                     <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--muted)' }}>
-                      Instrutor: {curso.instrutor?.nome || 'Desconhecido'}
+                      Instrutor: {curso.instrutorNome || 'Desconhecido'}
                     </p>
                   </div>
                   {statusBadge(curso.status)}
@@ -257,7 +257,7 @@ export default function AdminPage() {
                 {todosCursos.map(curso => (
                   <tr key={curso.idCurso} style={{ borderBottom: '1px solid var(--border)' }}>
                     <td style={{ padding: '14px 8px', fontWeight: 500 }}>{curso.titulo}</td>
-                    <td style={{ padding: '14px 8px', color: 'var(--muted)' }}>{curso.instrutor?.nome || '—'}</td>
+                    <td style={{ padding: '14px 8px', color: 'var(--muted)' }}>{curso.instrutorNome || '—'}</td>
                     <td style={{ padding: '14px 8px' }}>{statusBadge(curso.status)}</td>
                     <td style={{ padding: '14px 8px' }}>
                       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>

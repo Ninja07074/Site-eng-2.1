@@ -42,7 +42,7 @@ export default function AulaPage({ params }) {
       }
       try {
         const inscricoes = await apiListarInscricoesPorUsuario(session.userId);
-        const inscrito = inscricoes.some((insc) => insc?.curso?.idCurso === courseId);
+        const inscrito = inscricoes.some((insc) => insc?.cursoId === courseId);
         if (!inscrito) {
           router.push(`/curso/${courseId}`);
           return;
@@ -198,17 +198,17 @@ export default function AulaPage({ params }) {
             <p style={{ color: 'var(--muted)' }}>Nenhum comentário nesta aula. Seja o primeiro a participar!</p>
           ) : (
             comentarios.map(com => {
-              const isMine = String(com.usuario?.idUsuario) === String(session?.userId);
+              const isMine = String(com.usuarioId) === String(session?.userId);
               const isEditingThis = editComentarioId === com.idComentario;
 
               return (
                 <div key={com.idComentario} style={{ padding: '20px 0', borderBottom: '1px solid var(--border)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                     <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--primary)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
-                      {(com.usuario?.nome || 'A').charAt(0).toUpperCase()}
+                      {(com.nomeUsuario || 'A').charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <strong style={{ display: 'block', color: 'var(--fg)' }}>{com.usuario?.nome || 'Aluno'}</strong>
+                      <strong style={{ display: 'block', color: 'var(--fg)' }}>{com.nomeUsuario || 'Aluno'}</strong>
                       <small style={{ color: 'var(--muted)' }}>{new Date(com.dataCriacao).toLocaleDateString('pt-BR')}</small>
                     </div>
                   </div>

@@ -58,11 +58,11 @@ export default function CursoDetailPage({ params }) {
 
         if (session) {
           const inscricoes = await apiListarInscricoesPorUsuario(session.userId);
-          const inscrito = inscricoes.some((insc) => insc?.curso?.idCurso === id);
+          const inscrito = inscricoes.some((insc) => insc?.cursoId === id);
           setIsEnrolled(inscrito);
           
           if (inscrito) {
-            const mAv = avs.find(av => String(av.usuario?.idUsuario) === String(session.userId) || String(av.usuarioId) === String(session.userId));
+            const mAv = avs.find(av => String(av.usuarioId) === String(session.userId));
             if (mAv) {
               setMinhaAvaliacao(mAv);
               setReviewForm({ nota: mAv.nota, comentario: mAv.comentario || '' });
@@ -155,7 +155,7 @@ export default function CursoDetailPage({ params }) {
   if (errorMsg) return <main style={{ padding: '40px', textAlign: 'center' }}><p>{errorMsg}</p></main>;
   if (!curso) return <main style={{ padding: '40px', textAlign: 'center' }}><p>Carregando...</p></main>;
 
-  const isOwner = (session?.tipoUsuario === 'INSTRUTOR' && String(session.userId) === String(curso.instrutor?.idUsuario)) || session?.tipoUsuario === 'ADMIN';
+  const isOwner = session?.tipoUsuario === 'ADMIN' || (session?.tipoUsuario === 'INSTRUTOR');
 
   const mediaAvaliacoes = avaliacoes.length > 0 
     ? (avaliacoes.reduce((acc, av) => acc + av.nota, 0) / avaliacoes.length).toFixed(1)
@@ -205,9 +205,9 @@ export default function CursoDetailPage({ params }) {
               </span>
             )}
             {avaliacoes.length === 0 && <span className="curso-badge-new">Novo</span>}
-            {curso.instrutor?.nome && (
+            {curso.instrutorNome && (
               <span className="curso-instructor">
-                Criado por <strong>{curso.instrutor.nome}</strong>
+                Criado por <strong>{curso.instrutorNome}</strong>
               </span>
             )}
           </div>
@@ -348,7 +348,7 @@ export default function CursoDetailPage({ params }) {
                       const isMine = minhaAvaliacao && String(av.idAvaliacao) === String(minhaAvaliacao.idAvaliacao);
                       if (isMine && !isEditingReview) return null; // Já mostrei em cima
                       
-                      const nomeDisplay = av.usuario?.nome || av.nomeUsuario || 'Aluno';
+                      const nomeDisplay = av.nomeUsuario || 'Aluno';
                       return (
                         <div key={av.idAvaliacao || i} className="curso-avaliacao-item">
                           <div className="curso-avaliacao-header">
