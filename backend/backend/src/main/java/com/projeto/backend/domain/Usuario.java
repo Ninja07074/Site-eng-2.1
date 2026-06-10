@@ -27,6 +27,7 @@ public class Usuario {
     @com.fasterxml.jackson.annotation.JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     @Column(unique = true)
     private String cpf;
 

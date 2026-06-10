@@ -1,11 +1,31 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
+/**
+ * Recupera o userId da sessão no localStorage (se existir).
+ * Usado para enviar o header X-User-Id em requisições autenticadas.
+ */
+function getSessionUserId() {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem('ps_session_v1');
+    if (!raw) return null;
+    const session = JSON.parse(raw);
+    return session?.userId || null;
+  } catch {
+    return null;
+  }
+}
+
 async function apiRequest(path, options) {
+  const userId = getSessionUserId();
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(userId ? { 'X-User-Id': userId } : {}),
+    ...(options?.headers || {})
+  };
+
   const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...(options?.headers || {})
-    },
+    headers,
     ...options
   });
 
@@ -79,8 +99,10 @@ export function apiCriarCursoComImagem(instrutorId, dados) {
   formData.append('status', dados.status);
   formData.append('imagem', dados.imagem);
 
+  const userId = getSessionUserId();
   return fetch(`${API_BASE_URL}/cursos/criar`, {
     method: 'POST',
+    headers: userId ? { 'X-User-Id': userId } : {},
     body: formData
   }).then(async response => {
     const raw = await response.text();
@@ -134,8 +156,10 @@ export function apiEditarCursoComImagem(idCurso, instrutorId, dados) {
     formData.append('imagem', dados.imagem);
   }
 
+  const userId = getSessionUserId();
   return fetch(`${API_BASE_URL}/cursos/${encodeURIComponent(idCurso)}/editar`, {
     method: 'POST',
+    headers: userId ? { 'X-User-Id': userId } : {},
     body: formData
   }).then(async response => {
     const raw = await response.text();

@@ -37,9 +37,11 @@
 
 5. Em "Environment Variables", adicione:
 
-   DB_URL        = jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:5432/postgres?pgbouncer=true
-   DB_USERNAME   = postgres.rqlglzfgqmnhdoxtpeek
-   DB_PASSWORD   = Hugopberto1!
+   DB_URL        = <SUA_URL_DO_BANCO_AQUI>
+   DB_USERNAME   = <SEU_USUARIO_DO_BANCO_AQUI>
+   DB_PASSWORD   = <SUA_SENHA_DO_BANCO_AQUI>
+
+   ⚠️  NUNCA commite senhas reais no repositório!
 
 6. Clique em "Create Web Service"
 

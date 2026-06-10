@@ -96,6 +96,9 @@ public class UsuarioService {
             throw new IllegalArgumentException("Nome, email, senha e CPF são obrigatórios.");
         }
 
+        // Validação de formato e dígitos verificadores do CPF
+        validarCpf(usuario.getCpf());
+
         // Mantém compatibilidade com o fluxo do frontend/mock: tipo padrão ALUNO.
         String tipoNormalizado = isBlank(usuario.getTipoUsuario())
                 ? "ALUNO"
@@ -106,6 +109,52 @@ public class UsuarioService {
         }
 
         usuario.setTipoUsuario(tipoNormalizado);
+    }
+
+    /**
+     * Valida formato e dígitos verificadores do CPF.
+     * Aceita formato XXX.XXX.XXX-XX ou apenas 11 dígitos.
+     */
+    private void validarCpf(String cpf) {
+        if (cpf == null) {
+            throw new IllegalArgumentException("CPF é obrigatório.");
+        }
+        
+        // Remove formatação
+        String cpfLimpo = cpf.replaceAll("[.\\-]", "").trim();
+        
+        if (cpfLimpo.length() != 11 || !cpfLimpo.matches("\\d{11}")) {
+            throw new IllegalArgumentException("CPF deve conter 11 dígitos numéricos (formato: XXX.XXX.XXX-XX).");
+        }
+        
+        // Rejeita CPFs com todos os dígitos iguais (ex: 111.111.111-11)
+        if (cpfLimpo.chars().distinct().count() == 1) {
+            throw new IllegalArgumentException("CPF inválido.");
+        }
+        
+        // Valida primeiro dígito verificador
+        int soma = 0;
+        for (int i = 0; i < 9; i++) {
+            soma += Character.getNumericValue(cpfLimpo.charAt(i)) * (10 - i);
+        }
+        int primeiroDigito = 11 - (soma % 11);
+        if (primeiroDigito >= 10) primeiroDigito = 0;
+        
+        if (Character.getNumericValue(cpfLimpo.charAt(9)) != primeiroDigito) {
+            throw new IllegalArgumentException("CPF inválido.");
+        }
+        
+        // Valida segundo dígito verificador
+        soma = 0;
+        for (int i = 0; i < 10; i++) {
+            soma += Character.getNumericValue(cpfLimpo.charAt(i)) * (11 - i);
+        }
+        int segundoDigito = 11 - (soma % 11);
+        if (segundoDigito >= 10) segundoDigito = 0;
+        
+        if (Character.getNumericValue(cpfLimpo.charAt(10)) != segundoDigito) {
+            throw new IllegalArgumentException("CPF inválido.");
+        }
     }
 
     private boolean isBlank(String value) {

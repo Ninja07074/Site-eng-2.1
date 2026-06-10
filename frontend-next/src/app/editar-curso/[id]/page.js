@@ -40,12 +40,7 @@ export default function EditarCursoPage({ params }) {
       try {
         const curso = await apiBuscarCurso(id);
         
-        // Verificar se o usuário logado é o autor do curso
-        if (String(curso.instrutor?.idUsuario) !== String(session?.userId)) {
-          setAuthorized(false);
-          setLoadingData(false);
-          return;
-        }
+        // A proteção real de ownership é feita no backend via X-User-Id.
 
         setForm({
           titulo: curso.titulo || '',
