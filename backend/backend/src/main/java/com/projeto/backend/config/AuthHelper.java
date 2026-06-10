@@ -5,50 +5,40 @@ package com.projeto.backend.config;
 
 import com.projeto.backend.domain.Usuario;
 import com.projeto.backend.repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 public class AuthHelper {
 
-    /**
-     * Verifica se o userId corresponde a um ADMIN.
-     * @throws IllegalArgumentException se não for ADMIN ou userId inválido.
-     */
     public static Usuario requireAdmin(String userId, UsuarioRepository repo) {
         if (userId == null || userId.isBlank()) {
-            throw new SecurityException("Autenticação necessária.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Autenticação necessária.");
         }
         Usuario usuario = repo.findById(userId)
-                .orElseThrow(() -> new SecurityException("Usuário não encontrado."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuário não encontrado."));
         if (!"ADMIN".equalsIgnoreCase(usuario.getTipoUsuario())) {
-            throw new SecurityException("Acesso negado. Permissão de administrador necessária.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado. Permissão de administrador necessária.");
         }
         return usuario;
     }
 
-    /**
-     * Verifica se o userId corresponde a um INSTRUTOR.
-     * @throws SecurityException se não for INSTRUTOR ou userId inválido.
-     */
     public static Usuario requireInstrutor(String userId, UsuarioRepository repo) {
         if (userId == null || userId.isBlank()) {
-            throw new SecurityException("Autenticação necessária.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Autenticação necessária.");
         }
         Usuario usuario = repo.findById(userId)
-                .orElseThrow(() -> new SecurityException("Usuário não encontrado."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuário não encontrado."));
         if (!"INSTRUTOR".equalsIgnoreCase(usuario.getTipoUsuario())) {
-            throw new SecurityException("Acesso negado. Permissão de instrutor necessária.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado. Permissão de instrutor necessária.");
         }
         return usuario;
     }
 
-    /**
-     * Verifica se o userId é válido (qualquer tipo de usuário logado).
-     * @throws SecurityException se userId inválido.
-     */
     public static Usuario requireLoggedIn(String userId, UsuarioRepository repo) {
         if (userId == null || userId.isBlank()) {
-            throw new SecurityException("Autenticação necessária.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Autenticação necessária.");
         }
         return repo.findById(userId)
-                .orElseThrow(() -> new SecurityException("Usuário não encontrado."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuário não encontrado."));
     }
 }
