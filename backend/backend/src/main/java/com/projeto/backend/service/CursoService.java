@@ -43,8 +43,8 @@ public class CursoService {
         }
 
         curso.setInstrutor(instrutor);
-        // Temporariamente automático: cursos novos nascem como ATIVO diretamente
-        curso.setStatus("ATIVO");
+        // Cursos novos nascem como PENDENTE até aprovação do admin
+        curso.setStatus("PENDENTE");
         validarCurso(curso);
         return cursoRepository.save(curso);
     }
@@ -186,8 +186,8 @@ public class CursoService {
             if ("INATIVO".equalsIgnoreCase(dadosAtualizados.getStatus())) {
                 curso.setStatus("INATIVO");
             } else {
-                // Temporariamente automático: cursos editados ficam como ATIVO diretamente
-                curso.setStatus("ATIVO");
+                // Ao editar um curso, ele volta para PENDENTE de aprovação
+                curso.setStatus("PENDENTE");
                 curso.setMotivoRejeicao(null);
             }
         }
