@@ -52,7 +52,7 @@ export default function AdminPage() {
         setUsuarios(data);
       }
     } catch (err) {
-      setMsg('Erro ao carregar dados.');
+      setMsg('Erro ao carregar dados: ' + (err.message || 'Erro desconhecido'));
     }
   }
 
