@@ -43,7 +43,7 @@ export default function AulaPage({ params }) {
       try {
         const inscricoes = await apiListarInscricoesPorUsuario(session.userId);
         const inscrito = inscricoes.some((insc) => insc?.cursoId === courseId);
-        if (!inscrito) {
+        if (!inscrito && session.tipoUsuario !== 'ADMIN') {
           router.push(`/curso/${courseId}`);
           return;
         }

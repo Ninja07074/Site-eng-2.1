@@ -17,10 +17,15 @@ export default function CriarCursoPage() {
   const [msg, setMsg] = useState('');
   const [success, setSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [authorized, setAuthorized] = useState(true);
 
   useEffect(() => {
-    if (!isLoading && (!session || session.tipoUsuario !== 'INSTRUTOR')) {
+    if (!isLoading && !session) {
       router.push('/login');
+      return;
+    }
+    if (!isLoading && session && session.tipoUsuario !== 'INSTRUTOR') {
+      setAuthorized(false);
     }
   }, [session, isLoading, router]);
 
@@ -86,7 +91,19 @@ export default function CriarCursoPage() {
     }
   };
 
-  if (isLoading || !session || session.tipoUsuario !== 'INSTRUTOR') return null;
+  if (isLoading || !session) return null;
+
+  if (!authorized) {
+    return (
+      <main style={{ padding: '80px 20px', textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
+        <div style={{ background: 'var(--card)', padding: '40px', borderRadius: '16px', border: '1px solid var(--border)' }}>
+          <h2 style={{ color: 'var(--danger)', marginBottom: '16px' }}>Acesso Não Autorizado</h2>
+          <p style={{ color: 'var(--muted)', marginBottom: '24px' }}>Você não tem permissão. Apenas instrutores podem criar cursos.</p>
+          <button type="button" className="btn primary" onClick={() => router.push('/cursos')}>Voltar para Cursos</button>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main style={{ padding: 0 }}>
@@ -114,12 +131,12 @@ export default function CriarCursoPage() {
               
               <div className="form-field">
                 <label>Título do Curso *</label>
-                <input required value={form.titulo} onChange={e => setForm({...form, titulo: e.target.value})} placeholder="Ex: React Masterclass — Do Zero ao Avançado" />
+                <input required maxLength={255} value={form.titulo} onChange={e => setForm({...form, titulo: e.target.value})} placeholder="Ex: React Masterclass — Do Zero ao Avançado" />
               </div>
               
               <div className="form-field">
                 <label>Descrição do Curso *</label>
-                <textarea required value={form.descricao} onChange={e => setForm({...form, descricao: e.target.value})} placeholder="Descreva o que o aluno vai aprender, os pré-requisitos, e o que torna esse curso especial..." style={{ minHeight: '140px' }}></textarea>
+                <textarea required maxLength={2000} value={form.descricao} onChange={e => setForm({...form, descricao: e.target.value})} placeholder="Descreva o que o aluno vai aprender, os pré-requisitos, e o que torna esse curso especial..." style={{ minHeight: '140px' }}></textarea>
               </div>
             </div>
 
@@ -143,17 +160,17 @@ export default function CriarCursoPage() {
                   <div className="criar-modulo-fields">
                     <div className="form-field" style={{ flex: 2 }}>
                       <label>Título da Aula *</label>
-                      <input required value={mod.titulo} onChange={e => updateModulo(idx, 'titulo', e.target.value)} placeholder="Ex: Introdução ao React" />
+                      <input required maxLength={255} value={mod.titulo} onChange={e => updateModulo(idx, 'titulo', e.target.value)} placeholder="Ex: Introdução ao React" />
                     </div>
                     <div className="form-field" style={{ flex: 1 }}>
                       <label>URL do Vídeo</label>
-                      <input type="url" value={mod.videoUrl} onChange={e => updateModulo(idx, 'videoUrl', e.target.value)} placeholder="https://youtube.com/..." />
+                      <input type="url" maxLength={255} value={mod.videoUrl} onChange={e => updateModulo(idx, 'videoUrl', e.target.value)} placeholder="https://youtube.com/..." />
                     </div>
                   </div>
 
                   <div className="form-field">
                     <label>Descrição da Aula</label>
-                    <textarea value={mod.descricao} onChange={e => updateModulo(idx, 'descricao', e.target.value)} placeholder="O que o aluno vai aprender nesta aula..." style={{ minHeight: '70px' }}></textarea>
+                    <textarea maxLength={2000} value={mod.descricao} onChange={e => updateModulo(idx, 'descricao', e.target.value)} placeholder="O que o aluno vai aprender nesta aula..." style={{ minHeight: '70px' }}></textarea>
                   </div>
                 </div>
               ))}

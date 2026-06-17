@@ -31,9 +31,12 @@ export default function EditarCursoPage({ params }) {
   const [authorized, setAuthorized] = useState(true);
 
   useEffect(() => {
-    if (!isLoading && (!session || session.tipoUsuario !== 'INSTRUTOR')) {
+    if (!isLoading && !session) {
       router.push('/login');
       return;
+    }
+    if (!isLoading && session && session.tipoUsuario !== 'INSTRUTOR') {
+      setAuthorized(false);
     }
 
     async function loadCourseData() {
@@ -217,6 +220,7 @@ export default function EditarCursoPage({ params }) {
                 <label>Título do Curso *</label>
                 <input 
                   required 
+                  maxLength={255}
                   value={form.titulo} 
                   onChange={e => setForm({...form, titulo: e.target.value})} 
                   placeholder="Ex: React Masterclass — Do Zero ao Avançado" 
@@ -227,6 +231,7 @@ export default function EditarCursoPage({ params }) {
                 <label>Descrição do Curso *</label>
                 <textarea 
                   required 
+                  maxLength={2000}
                   value={form.descricao} 
                   onChange={e => setForm({...form, descricao: e.target.value})} 
                   placeholder="Descreva o que o aluno vai aprender, os pré-requisitos, e o que torna esse curso especial..." 
@@ -266,6 +271,7 @@ export default function EditarCursoPage({ params }) {
                       <label>Título da Aula *</label>
                       <input 
                         required 
+                        maxLength={255}
                         value={mod.titulo} 
                         onChange={e => updateModulo(idx, 'titulo', e.target.value)} 
                         placeholder="Ex: Introdução ao React" 
@@ -275,6 +281,7 @@ export default function EditarCursoPage({ params }) {
                       <label>URL do Vídeo</label>
                       <input 
                         type="url" 
+                        maxLength={255}
                         value={mod.videoUrl} 
                         onChange={e => updateModulo(idx, 'videoUrl', e.target.value)} 
                         placeholder="https://youtube.com/..." 
@@ -285,6 +292,7 @@ export default function EditarCursoPage({ params }) {
                   <div className="form-field">
                     <label>Descrição da Aula</label>
                     <textarea 
+                      maxLength={2000}
                       value={mod.descricao} 
                       onChange={e => updateModulo(idx, 'descricao', e.target.value)} 
                       placeholder="O que o aluno vai aprender nesta aula..." 

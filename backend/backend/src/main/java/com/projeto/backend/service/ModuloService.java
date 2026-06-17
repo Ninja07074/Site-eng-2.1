@@ -87,6 +87,18 @@ public class ModuloService {
         if (modulo.getCurso() == null) {
             throw new IllegalArgumentException("Módulo precisa estar associado a um curso.");
         }
+
+        if (modulo.getTitulo() != null && modulo.getTitulo().length() > 255) {
+            throw new IllegalArgumentException("O título da aula excede o limite de 255 caracteres.");
+        }
+
+        if (modulo.getDescricao() != null && modulo.getDescricao().length() > 2000) {
+            throw new IllegalArgumentException("A descrição da aula excede o limite de 2000 caracteres.");
+        }
+
+        if (modulo.getVideoUrl() != null && modulo.getVideoUrl().length() > 255) {
+            throw new IllegalArgumentException("A URL do vídeo excede o limite de 255 caracteres.");
+        }
     }
 
     private boolean isBlank(String value) {

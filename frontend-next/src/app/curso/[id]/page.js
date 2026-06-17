@@ -382,9 +382,9 @@ export default function CursoDetailPage({ params }) {
             />
             <div className="curso-sidebar-body">
               <div className="curso-price">Gratuito</div>
-              {isEnrolled ? (
+              {isEnrolled || session?.tipoUsuario === 'ADMIN' ? (
                 <Link href={`/aula/${id}`} className="btn primary curso-enroll-btn" style={{ textDecoration: 'none' }}>
-                  Continuar Assistindo
+                  {session?.tipoUsuario === 'ADMIN' && !isEnrolled ? 'Acessar Aula (Admin)' : 'Continuar Assistindo'}
                 </Link>
               ) : (
                 <button onClick={handleEnroll} className="btn primary curso-enroll-btn">

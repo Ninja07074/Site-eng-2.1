@@ -214,6 +214,18 @@ public class CursoService {
         if (curso.getInstrutor() == null) {
             throw new IllegalArgumentException("Curso precisa de um instrutor responsável.");
         }
+
+        if (curso.getTitulo() != null && curso.getTitulo().length() > 255) {
+            throw new IllegalArgumentException("O título do curso excede o limite de 255 caracteres.");
+        }
+
+        if (curso.getDescricao() != null && curso.getDescricao().length() > 2000) {
+            throw new IllegalArgumentException("A descrição do curso excede o limite de 2000 caracteres.");
+        }
+
+        if (curso.getVideoUrl() != null && curso.getVideoUrl().length() > 255) {
+            throw new IllegalArgumentException("A URL do vídeo excede o limite de 255 caracteres.");
+        }
     }
 
     private boolean isBlank(String value) {
