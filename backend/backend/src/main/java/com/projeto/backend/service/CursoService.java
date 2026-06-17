@@ -215,8 +215,8 @@ public class CursoService {
             throw new IllegalArgumentException("Curso precisa de um instrutor responsável.");
         }
 
-        if (curso.getTitulo() != null && curso.getTitulo().length() > 255) {
-            throw new IllegalArgumentException("O título do curso excede o limite de 255 caracteres.");
+        if (curso.getTitulo() != null && curso.getTitulo().length() > 60) {
+            throw new IllegalArgumentException("O título do curso excede o limite de 60 caracteres.");
         }
 
         if (curso.getDescricao() != null && curso.getDescricao().length() > 2000) {

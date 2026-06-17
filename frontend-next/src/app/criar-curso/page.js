@@ -132,9 +132,9 @@ export default function CriarCursoPage() {
               <div className="form-field">
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <label>Título do Curso *</label>
-                  <small style={{ color: form.titulo.length === 255 ? 'var(--danger)' : 'var(--muted)' }}>{form.titulo.length}/255</small>
+                  <small style={{ color: form.titulo.length === 60 ? 'var(--danger)' : 'var(--muted)' }}>{form.titulo.length}/60</small>
                 </div>
-                <input required maxLength={255} value={form.titulo} onChange={e => setForm({...form, titulo: e.target.value})} placeholder="Ex: React Masterclass — Do Zero ao Avançado" />
+                <input required maxLength={60} value={form.titulo} onChange={e => setForm({...form, titulo: e.target.value})} placeholder="Ex: React Masterclass — Do Zero ao Avançado" />
               </div>
               
               <div className="form-field">
