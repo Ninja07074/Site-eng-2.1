@@ -217,7 +217,10 @@ export default function EditarCursoPage({ params }) {
               <h2 className="criar-section-title">Informações Básicas</h2>
               
               <div className="form-field">
-                <label>Título do Curso *</label>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <label>Título do Curso *</label>
+                  <small style={{ color: form.titulo.length === 255 ? 'var(--danger)' : 'var(--muted)' }}>{form.titulo.length}/255</small>
+                </div>
                 <input 
                   required 
                   maxLength={255}
@@ -228,7 +231,10 @@ export default function EditarCursoPage({ params }) {
               </div>
               
               <div className="form-field">
-                <label>Descrição do Curso *</label>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <label>Descrição do Curso *</label>
+                  <small style={{ color: form.descricao.length === 2000 ? 'var(--danger)' : 'var(--muted)' }}>{form.descricao.length}/2000</small>
+                </div>
                 <textarea 
                   required 
                   maxLength={2000}
@@ -268,7 +274,10 @@ export default function EditarCursoPage({ params }) {
                   
                   <div className="criar-modulo-fields">
                     <div className="form-field" style={{ flex: 2 }}>
-                      <label>Título da Aula *</label>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <label>Título da Aula *</label>
+                        <small style={{ color: mod.titulo.length === 255 ? 'var(--danger)' : 'var(--muted)' }}>{mod.titulo.length}/255</small>
+                      </div>
                       <input 
                         required 
                         maxLength={255}
@@ -278,7 +287,10 @@ export default function EditarCursoPage({ params }) {
                       />
                     </div>
                     <div className="form-field" style={{ flex: 1 }}>
-                      <label>URL do Vídeo</label>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <label>URL do Vídeo</label>
+                        <small style={{ color: (mod.videoUrl || '').length === 255 ? 'var(--danger)' : 'var(--muted)' }}>{(mod.videoUrl || '').length}/255</small>
+                      </div>
                       <input 
                         type="url" 
                         maxLength={255}
@@ -290,7 +302,10 @@ export default function EditarCursoPage({ params }) {
                   </div>
 
                   <div className="form-field">
-                    <label>Descrição da Aula</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <label>Descrição da Aula</label>
+                      <small style={{ color: (mod.descricao || '').length === 2000 ? 'var(--danger)' : 'var(--muted)' }}>{(mod.descricao || '').length}/2000</small>
+                    </div>
                     <textarea 
                       maxLength={2000}
                       value={mod.descricao} 

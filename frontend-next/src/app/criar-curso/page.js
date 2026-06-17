@@ -130,12 +130,18 @@ export default function CriarCursoPage() {
               <h2 className="criar-section-title">Informações Básicas</h2>
               
               <div className="form-field">
-                <label>Título do Curso *</label>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <label>Título do Curso *</label>
+                  <small style={{ color: form.titulo.length === 255 ? 'var(--danger)' : 'var(--muted)' }}>{form.titulo.length}/255</small>
+                </div>
                 <input required maxLength={255} value={form.titulo} onChange={e => setForm({...form, titulo: e.target.value})} placeholder="Ex: React Masterclass — Do Zero ao Avançado" />
               </div>
               
               <div className="form-field">
-                <label>Descrição do Curso *</label>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <label>Descrição do Curso *</label>
+                  <small style={{ color: form.descricao.length === 2000 ? 'var(--danger)' : 'var(--muted)' }}>{form.descricao.length}/2000</small>
+                </div>
                 <textarea required maxLength={2000} value={form.descricao} onChange={e => setForm({...form, descricao: e.target.value})} placeholder="Descreva o que o aluno vai aprender, os pré-requisitos, e o que torna esse curso especial..." style={{ minHeight: '140px' }}></textarea>
               </div>
             </div>
@@ -159,17 +165,26 @@ export default function CriarCursoPage() {
                   
                   <div className="criar-modulo-fields">
                     <div className="form-field" style={{ flex: 2 }}>
-                      <label>Título da Aula *</label>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <label>Título da Aula *</label>
+                        <small style={{ color: mod.titulo.length === 255 ? 'var(--danger)' : 'var(--muted)' }}>{mod.titulo.length}/255</small>
+                      </div>
                       <input required maxLength={255} value={mod.titulo} onChange={e => updateModulo(idx, 'titulo', e.target.value)} placeholder="Ex: Introdução ao React" />
                     </div>
                     <div className="form-field" style={{ flex: 1 }}>
-                      <label>URL do Vídeo</label>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <label>URL do Vídeo</label>
+                        <small style={{ color: (mod.videoUrl || '').length === 255 ? 'var(--danger)' : 'var(--muted)' }}>{(mod.videoUrl || '').length}/255</small>
+                      </div>
                       <input type="url" maxLength={255} value={mod.videoUrl} onChange={e => updateModulo(idx, 'videoUrl', e.target.value)} placeholder="https://youtube.com/..." />
                     </div>
                   </div>
 
                   <div className="form-field">
-                    <label>Descrição da Aula</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <label>Descrição da Aula</label>
+                      <small style={{ color: (mod.descricao || '').length === 2000 ? 'var(--danger)' : 'var(--muted)' }}>{(mod.descricao || '').length}/2000</small>
+                    </div>
                     <textarea maxLength={2000} value={mod.descricao} onChange={e => updateModulo(idx, 'descricao', e.target.value)} placeholder="O que o aluno vai aprender nesta aula..." style={{ minHeight: '70px' }}></textarea>
                   </div>
                 </div>
